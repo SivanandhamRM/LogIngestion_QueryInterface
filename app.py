@@ -50,6 +50,58 @@ def ingest_logs():
         conn.rollback()  # Rollback in case of an error
         print("Error:", e)
         return 'Failed to ingest logs.', 500
+    
+
+@app.route('/query', methods=['POST'])
+def query_method():
+    request_args = request.json
+    level = request_args.get('level')
+    message = request_args.get('message')
+    resource_id = request_args.get('resource_id')
+    start_date = request_args.get('start_date')
+    end_date = request_args.get('end_date')
+    trace_id = request_args.get('trace_id')
+    span_id = request_args.get('span_id')
+    commit = request_args.get('commit')
+    metadata = request_args.get('metadata')
+
+    print('level', level, "message", message, "resource_id", resource_id, f"{start_date=}", f"{end_date=}", f"{trace_id=}", f"{span_id=}, {commit=}, {metadata=}")
+
+    query_string = "SELECT * FROM log"
+    filter_string = []
+    if level:
+        filter_string.append(f"level='{level}'")
+    if message:
+        filter_string.append(f"message LIKE '%{message}%'")
+    if resource_id:
+        filter_string.append(f"resource_id ='{resource_id}'")
+    if start_date:
+        filter_string.append(f"start_date>={start_date}")
+    if end_date:
+        filter_string.append(f"end_date<={end_date}")
+    if trace_id:
+        filter_string.append(f"trace_id ='{trace_id}'")
+    if span_id:
+        filter_string.append(f"span_id ='{span_id}'")
+    if commit:
+        filter_string.append(f"commit ='{commit}'")
+    # if metadata:
+    #     filter_string.append(f"metadata ='{metadata}'")
+
+    if filter_string:
+        multiple_filter = " WHERE " + " AND ".join(filter_string)
+    else:
+        multiple_filter = ''
+
+    final_query = query_string + multiple_filter
+    print(final_query)
+
+
+    with conn.cursor() as cur:
+        cur.execute(final_query)
+        results = cur.fetchall()
+
+    return results
 
 
 if __name__ == '__main__':
