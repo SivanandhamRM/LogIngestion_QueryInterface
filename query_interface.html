@@ -131,6 +131,16 @@
 
         <p class="error-message" id="error_message"></p>
       </div>
+      <div style="display: flex; margin-top: 24px">
+        <select id="page-limit" onchange="changelimit(event)">
+          <option value="10">10</option>
+          <option value="50">50</option>
+          <option value="100">100</option>
+        </select>
+        <nav style="margin-left: auto" aria-label="Page navigation example">
+          <ul class="pagination" id="pagination_control"></ul>
+        </nav>
+      </div>
     </div>
   </body>
 </html>

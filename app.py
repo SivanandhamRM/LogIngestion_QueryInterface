@@ -72,6 +72,8 @@ def query_method():
         span_id = request_args.get("span_id")
         commit = request_args.get("commit")
         metadata = request_args.get("metadata")
+        offset = request_args.get("offset", 0)
+        limit = request_args.get("limit", 50)
 
         # print('level', level, "message", message, "resource_id", resource_id, f"{start_date=}", f"{end_date=}", f"{trace_id=}", f"{span_id=}, {commit=}, {metadata=}")
 
@@ -101,13 +103,21 @@ def query_method():
         else:
             multiple_filter = ""
 
-        final_query = query_string + multiple_filter + " LIMIT 100 OFFSET 0"
+        final_query = (
+            query_string + multiple_filter + f" LIMIT {str(limit)} OFFSET {str(offset)}"
+        )
+        count_query = "SELECT COUNT(*) FROM log" + multiple_filter
         print(final_query)
 
         with conn.cursor() as cur:
             cur.execute(final_query)
             results = cur.fetchall()
-        return results
+
+            cur.execute(count_query)
+            count = cur.fetchone()[0]
+            print("Size of query:", count)
+
+        return {"results": results, "count": count}
 
     except Exception as e:
         traceback.print_exc()
