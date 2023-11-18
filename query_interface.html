@@ -1,95 +1,136 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="app.js" defer></script>
-  <title>Log Search</title>
-</head>
-<body>
-
-<div class="override-container">
-  <div class="search-bar">
-    <h2>Log Search Query Interface</h2>
-  </div>
-
-  <div class="filters">
-    <form>
-      <div class="form-row">
-        <div class="col">
-          <label for="level">Level:</label>
-          <select id="level" class="form-control">
-            <option value="">All</option>
-            <option value="error">Error</option>
-            <!-- Add other log levels -->
-          </select>
-        </div>
-        <div class="col">
-          <label for="resourceId">Resource ID:</label>
-          <input type="text" id="resourceId" class="form-control" placeholder="Enter resource ID...">
-        </div>
-
-        <div class="col">
-          <label for="timestamp">Timestamp:</label>
-          <div class="input-group date">
-            <input type="text" id="startDate" class="form-control" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')">
-          </div>
-          <div class="input-group date mt-2">
-            <input type="text" id="endDate" class="form-control" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')">
-          </div>
-        </div>
-
-        <div class="col">
-          <label for="traceId">Trace ID:</label>
-          <input type="text" id="traceId" class="form-control" placeholder="Enter trace ID...">
-        </div>
-
-        <div class="col">
-          <label for="spanId">Span ID:</label>
-          <input type="text" id="spanId" class="form-control" placeholder="Enter span ID...">
-        </div>
-
-        <div class="col">
-          <label for="commit">Commit:</label>
-          <input type="text" id="commit" class="form-control" placeholder="Enter commit...">
-        </div>
-
-        <div class="col">
-          <label for="metadata">Parent Resource Id:</label>
-          <input type="text" id="metadata" class="form-control" placeholder="Enter Parent Resource Id...">
-        </div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="app.js" defer></script>
+    <title>Log Search</title>
+  </head>
+  <body>
+    <div class="override-container">
+      <div class="search-bar">
+        <h2>Log Search Query Interface</h2>
       </div>
 
-      <button type="button" onclick="searchLogs()" class="btn btn-primary mt-3">Search</button>
-    </form>
-  </div>
+      <div class="filters">
+        <form onsubmit="getSearchResults(event)">
+          <div class="form-row">
+            <div class="col">
+              <label for="level">Level:</label>
+              <select id="level" class="form-control">
+                <option value="">All</option>
+                <option value="debug">Debug</option>
+                <option value="info">Info</option>
+                <option value="warning">Warning</option>
+                <option value="error">Error</option>
+                <option value="critical">Critical</option>
+              </select>
+            </div>
+            <div class="col">
+              <label for="resource_id">Resource ID:</label>
+              <input
+                type="text"
+                id="resource_id"
+                class="form-control"
+                placeholder="Enter resource ID..."
+              />
+            </div>
 
-  <div class="search-results">
-    <table class="table mt-4">
-      <thead>
-        <tr>
-          <th>Level</th>
-          <th>Message</th>
-          <th>Resource ID</th>
-          <th>Timestamp</th>
-          <th>Trace ID</th>
-          <th>Span ID</th>
-          <th>Commit</th>
-          <th>metadata</th>
-        </tr>
-      </thead>
-      <tbody id="logTableBody">
-        <!-- Log entries will be dynamically added here -->
-      </tbody>
-    </table>
+            <div class="col">
+              <label for="timestamp">Timestamp:</label>
+              <div class="input-group date">
+                <input
+                  type="text"
+                  id="start_date"
+                  class="form-control"
+                  placeholder="Start Date"
+                  onfocus="(this.type='date')"
+                  onblur="(this.type='text')"
+                />
+              </div>
+              <div class="input-group date mt-2">
+                <input
+                  type="text"
+                  id="end_date"
+                  class="form-control"
+                  placeholder="End Date"
+                  onfocus="(this.type='date')"
+                  onblur="(this.type='text')"
+                />
+              </div>
+            </div>
 
-    <p class="error-message" id="errorMessage"></p>
-  </div>
-</div>
+            <div class="col">
+              <label for="trace_id">Trace ID:</label>
+              <input
+                type="text"
+                id="trace_id"
+                class="form-control"
+                placeholder="Enter trace ID..."
+              />
+            </div>
 
-</body>
+            <div class="col">
+              <label for="span_id">Span ID:</label>
+              <input
+                type="text"
+                id="span_id"
+                class="form-control"
+                placeholder="Enter span ID..."
+              />
+            </div>
+
+            <div class="col">
+              <label for="commit">Commit:</label>
+              <input
+                type="text"
+                id="commit"
+                class="form-control"
+                placeholder="Enter commit..."
+              />
+            </div>
+
+            <div class="col">
+              <label for="metadata">Parent Resource Id:</label>
+              <input
+                type="text"
+                id="metadata"
+                class="form-control"
+                placeholder="Enter Parent Resource Id..."
+              />
+            </div>
+          </div>
+
+          <input type="submit" class="btn btn-primary mt-3" value="search" />
+        </form>
+      </div>
+
+      <div class="search-results">
+        <table class="table mt-4">
+          <thead>
+            <tr>
+              <th>Level</th>
+              <th>Message</th>
+              <th>Resource ID</th>
+              <th>Timestamp</th>
+              <th>Trace ID</th>
+              <th>Span ID</th>
+              <th>Commit</th>
+              <th>metadata</th>
+            </tr>
+          </thead>
+          <tbody id="log_table_body"></tbody>
+        </table>
+
+        <p class="error-message" id="error_message"></p>
+      </div>
+    </div>
+  </body>
 </html>

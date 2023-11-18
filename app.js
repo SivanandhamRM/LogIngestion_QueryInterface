@@ -1,18 +1,79 @@
-function displayLogs(logs) {
-    const logTableBody = document.getElementById('logTableBody');
-  
-    // Clear existing rows
-    logTableBody.innerHTML = '';
-  
-    // Populate the table with log entries
-    logs.forEach(log => {
-      const row = logTableBody.insertRow();
-      Object.values(log).forEach(value => {
-        const cell = row.insertCell();
-        cell.textContent = value;
-      });
+function displayDataInTable(data) {
+  const tableBody = document.getElementById("log_table_body");
+
+  // Clear existing table rows
+  tableBody.innerHTML = "";
+
+  // Loop through the data and create table rows
+  data.forEach((item) => {
+    const row = tableBody.insertRow();
+
+    // Assuming the structure is fixed, you can access elements directly
+    let i = 1;
+    for (i = 1; i < item.length - 1; i++) {
+      const cell = row.insertCell(i - 1);
+      cell.textContent = item[i];
+    }
+
+    // If the last element is an object, you can access its properties
+    const lastElement = item[item.length - 1];
+
+    if (typeof lastElement === "object" && lastElement !== null) {
+      const cell = row.insertCell(i - 1);
+      // console.log(cell)
+      cell.textContent = lastElement.parentResourceId || ""; // Adjust property name as needed
+    }
+  });
+  console.log(data.length);
+}
+
+function getSearchResults(event) {
+  event.preventDefault();
+  const level = document.getElementById("level")?.value;
+  const message = document.getElementById("message")?.value;
+  const resource_id = document.getElementById("resource_id")?.value;
+  const start_date = document.getElementById("start_date")?.value;
+  const end_date = document.getElementById("end_date")?.value;
+  const trace_id = document.getElementById("trace_id")?.value;
+  const span_id = document.getElementById("span_id")?.value;
+  const commit = document.getElementById("commit")?.value;
+  const metadata = document.getElementById("metadata")?.value;
+
+  // alert(level)
+
+  const data = {
+    level: level,
+    message: message,
+    resource_id: resource_id,
+    start_date: start_date,
+    end_date: end_date,
+    trace_id: trace_id,
+    span_id: span_id,
+    commit: commit,
+    metadata: metadata,
+  };
+
+  // Make a POST request using the fetch API
+  fetch("http://localhost:3000/query", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then(async (response) => {
+      const temp = await response.json();
+      if (!response.ok) {
+        throw Error(temp.error);
+      }
+      return temp;
+    })
+    .then((data) => {
+      // Handle the response from the server
+      //   console.log("Response from server:", data);
+      displayDataInTable(data);
+    })
+    .catch((error) => {
+      alert(error);
     });
-  }
-
-
-  
+}

@@ -1,17 +1,19 @@
 /* Bootstrap and Bootstrap Datepicker styles */
-@import url('https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css');
-@import url('https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css');
+@import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css");
 
 /* Custom styles */
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f4f4f4;
   margin: 0;
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 90vh;
+  overflow: auto;
+  max-height: 100vh;
+  margin-top: 20px;
 }
 
 .override-container {
@@ -74,4 +76,7 @@ th {
   margin-top: 10px;
 }
 
-
+.search-results {
+  overflow: auto;
+  max-height: 50vh;
+}
