@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
+  <style>
+    body {
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+    }
+    .search-bar, .filters, .search-results {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="search-bar">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Enter your search query..." id="searchQuery">
+      <div class="input-group-append">
+        <button class="btn btn-primary" type="button" onclick="executeSearch()">Search</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="form-row">
+      <div class="col-md-3 mb-3">
+        <label for="levelFilter">Level:</label>
+        <select class="form-control" id="levelFilter">
+          <option value="">Select Level</option>
+          <option value="error">Error</option>
+          <!-- Add other log levels -->
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="messageFilter">Message contains:</label>
+        <input type="text" class="form-control" id="messageFilter" placeholder="Enter search term...">
+      </div>
+      <div class="col-md-5 mb-3">
+        <label for="dateRange">Select Date Range:</label>
+        <input type="text" class="form-control date-range-picker" id="dateRange">
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="resourceIdFilter">Resource ID:</label>
+        <input type="text" class="form-control" id="resourceIdFilter" placeholder="Enter resource ID...">
+      </div>
+      <!-- Add similar elements for other filters -->
+    </div>
+
+    <div class="form-check">
+      <input type="checkbox" class="form-check-input" id="realTimeToggle">
+      <label class="form-check-label" for="realTimeToggle">Real-Time Search</label>
+    </div>
+
+    <button class="btn btn-primary mt-3" onclick="executeSearch()">Apply Filters</button>
+  </div>
+
+  <div class="search-results">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Level</th>
+          <th>Message</th>
+          <th>Resource ID</th>
+          <th>Timestamp</th>
+          <!-- Add other columns -->
+        </tr>
+      </thead>
+      <tbody id="searchResults">
+        <!-- Results will be dynamically populated here -->
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
+<script>
+  $(document).ready(function() {
+    // Initialize datepicker
+    $('.date-range-picker').datepicker({
+      format: 'yyyy-mm-dd',
+      autoclose: true
+    });
+  });
+
+  function executeSearch() {
+    // Fetch user inputs and execute search
+    const searchQuery = $('#searchQuery').val();
+    const levelFilter = $('#levelFilter').val();
+    const messageFilter = $('#messageFilter').val();
+    const dateRange = $('#dateRange').val();
+    const realTime = $('#realTimeToggle').is(':checked');
+
+    // Make an AJAX request to your server with the search parameters
+    // Process the results and dynamically populate the searchResults tbody
+    // Update the UI accordingly
+  }
+</script>
+
+</body>
+</html>
