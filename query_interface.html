@@ -4,17 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css">
   <link rel="stylesheet" href="styles.css">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script>
   <script src="app.js" defer></script>
   <title>Log Search</title>
 </head>
 <body>
 
-<div class="container">
+<div class="override-container">
   <div class="search-bar">
     <h2>Log Search Query Interface</h2>
   </div>
@@ -30,12 +28,6 @@
             <!-- Add other log levels -->
           </select>
         </div>
-
-        <div class="col">
-          <label for="message">Message:</label>
-          <input type="text" id="message" class="form-control" placeholder="Enter message...">
-        </div>
-
         <div class="col">
           <label for="resourceId">Resource ID:</label>
           <input type="text" id="resourceId" class="form-control" placeholder="Enter resource ID...">
@@ -43,17 +35,11 @@
 
         <div class="col">
           <label for="timestamp">Timestamp:</label>
-          <div class="input-group date" data-provide="datepicker">
-            <input type="text" id="startDate" class="form-control" placeholder="Start Date">
-            <div class="input-group-append">
-              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-            </div>
+          <div class="input-group date">
+            <input type="text" id="startDate" class="form-control" placeholder="Start Date" onfocus="(this.type='date')" onblur="(this.type='text')">
           </div>
-          <div class="input-group date mt-2" data-provide="datepicker">
-            <input type="text" id="endDate" class="form-control" placeholder="End Date">
-            <div class="input-group-append">
-              <span class="input-group-text"><i class="far fa-calendar-alt"></i></span>
-            </div>
+          <div class="input-group date mt-2">
+            <input type="text" id="endDate" class="form-control" placeholder="End Date" onfocus="(this.type='date')" onblur="(this.type='text')">
           </div>
         </div>
 
@@ -73,8 +59,8 @@
         </div>
 
         <div class="col">
-          <label for="parentResourceId">Parent Resource ID:</label>
-          <input type="text" id="parentResourceId" class="form-control" placeholder="Enter parent resource ID...">
+          <label for="metadata">metadata.parentResourceId:</label>
+          <input type="text" id="metadata" class="form-control" placeholder="Enter metadata...">
         </div>
       </div>
 
@@ -93,7 +79,7 @@
           <th>Trace ID</th>
           <th>Span ID</th>
           <th>Commit</th>
-          <th>Parent Resource ID</th>
+          <th>metadata</th>
         </tr>
       </thead>
       <tbody id="logTableBody">
@@ -104,13 +90,6 @@
     <p class="error-message" id="errorMessage"></p>
   </div>
 </div>
-
-<script>
-  // Initialize datepicker
-  $('.datepicker').datepicker({
-    format: 'yyyy-mm-dd'
-  });
-</script>
 
 </body>
 </html>
