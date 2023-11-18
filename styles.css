@@ -80,3 +80,7 @@ th {
   overflow: auto;
   max-height: 50vh;
 }
+
+#page-limit {
+  display: none; /* Initially hide the select */
+}

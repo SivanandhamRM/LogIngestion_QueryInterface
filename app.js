@@ -73,7 +73,7 @@ function generatePagination(totalPages, currentPage) {
   }
 
   // Show the current page
-  if (currentPage > 3 && currentPage < Math.max(totalPages - 2, 1)) {
+  if (currentPage > 3 && currentPage < Math.max(totalPages - 2, 2)) {
     paginationContainer.innerHTML += `<li class="page-item active"><span class="page-link">${currentPage}</span></li>`;
     // Show ellipsis if there are more than three pages
     if (totalPages > 3) {
@@ -82,7 +82,7 @@ function generatePagination(totalPages, currentPage) {
   }
 
   // Show the last three pages
-  for (let page = Math.max(totalPages - 2, 1); page <= totalPages; page++) {
+  for (let page = Math.max(totalPages - 2, 2); page <= totalPages; page++) {
     paginationContainer.innerHTML += `<li class="page-item ${
       page === currentPage ? "active" : ""
     }"><a class="page-link" href="#" onclick="changePage(${page}, ${totalPages})">${page}</a></li>`;
@@ -152,6 +152,8 @@ function getSearchResultsByOffset(offset, limit) {
       //   console.log("Response from server:", data);
       displayDataInTable(data.results);
       generatePagination(Math.ceil(data.count / limit), offset);
+      var selectElement = document.getElementById("page-limit");
+      selectElement.style.display = "block";
     })
     .catch((error) => {
       alert(error);
