@@ -30,18 +30,9 @@ function displayDataInTable(data) {
 function changelimit(event) {
   event.preventDefault();
   getSearchResultsByOffset(1, event.target.value);
-  // const pagelimit = document.getElementById("page-limit");
-  // pagelimit.innerHTML = ""; // Clear existing pagination
-  // pagelimit.innerHTML = `        <select id="page-limit" onchange="changelimit(event)">
-  // <option value="10">10</option>
-  // <option value="50">50</option>
-  // <option value="100">100</option></select>`;
 }
 
 function changePage(newPage, totalPages) {
-  // Replace this with your logic to load and display content based on the selected page
-  // const contentContainer = document.getElementById("pagination_control");
-  // contentContainer.innerHTML = `<p>Content for Page ${newPage}</p>`;
   getSearchResultsByOffset(newPage, 10);
 }
 
@@ -150,12 +141,45 @@ function getSearchResultsByOffset(offset, limit) {
     .then((data) => {
       // Handle the response from the server
       //   console.log("Response from server:", data);
-      displayDataInTable(data.results);
-      generatePagination(Math.ceil(data.count / limit), offset);
-      var selectElement = document.getElementById("page-limit");
-      selectElement.style.display = "block";
+      const tableBody = document.getElementById("log_table_body");
+      const errorMessage = document.getElementById("error_message");
+      const paginationContainer = document.getElementById("pagination_control");
+      const pageLimitSelect = document.getElementById("page-limit");
+
+      if (data.results.length === 0) {
+        errorMessage.textContent =
+          "No records found for the selected filter(s).";
+        tableBody.innerHTML = "";
+        paginationContainer.style.display = "none";
+        pageLimitSelect.disabled = true;
+      } else {
+        errorMessage.textContent = "";
+        displayDataInTable(data.results);
+        generatePagination(Math.ceil(data.count / limit), offset);
+        var selectElement = document.getElementById("page-limit");
+        selectElement.style.display = "block";
+        pageLimitSelect.disabled = false;
+      }
     })
     .catch((error) => {
       alert(error);
     });
+}
+
+function removeFilters(event) {
+  event.preventDefault();
+  const filterInputs = document.querySelectorAll(".form-control");
+  filterInputs.forEach((input) => {
+    input.value = ""; // Clear all filter inputs
+  });
+
+  // Clear table body and hide pagination
+  const tableBody = document.getElementById("log_table_body");
+  const paginationContainer = document.getElementById("pagination_control");
+  const errorMessage = document.getElementById("error_message");
+
+  tableBody.innerHTML = ""; // Clear the table body
+  paginationContainer.style.display = "none"; // Hide pagination
+  errorMessage.textContent =
+    "Select filter(s) and Click Search to view data records."; // Show initial message
 }
