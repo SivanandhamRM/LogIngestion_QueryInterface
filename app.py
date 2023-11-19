@@ -82,7 +82,7 @@ def query_method():
         if level:
             filter_string.append(f"level='{level}'")
         if message:
-            filter_string.append(f"message LIKE '%{message}%'")
+            filter_string.append(f"message ILIKE '%{message}%'")
         if resource_id:
             filter_string.append(f"resource_id ='{resource_id}'")
         if start_date:
