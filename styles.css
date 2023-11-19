@@ -2,10 +2,18 @@
 @import url("https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/css/bootstrap-datepicker.min.css");
 
+/* Define the colors from the palette */
+:root {
+  --primary-color: #610c9f;
+  --secondary-color: #940b92;
+  --tertiary-color: #da0c81;
+  --quaternary-color: #e95793;
+}
+
 /* Custom styles */
 body {
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #f4f4f4;
+  font-family: "Times New Roman", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--secondary-color);
   margin: 0;
   padding: 0;
   display: flex;
@@ -14,19 +22,24 @@ body {
   overflow: auto;
   max-height: 100vh;
   margin-top: 20px;
+  color: var(--quaternary-color);
 }
 
 .override-container {
   background-color: #fff;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
   width: 90%;
   text-align: center;
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+    rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+    rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
 }
 
 h2 {
-  color: #333;
+  /* color: #333; */
+  color: var(--primary-color);
 }
 
 .filters {
@@ -39,6 +52,7 @@ h2 {
 .filters label {
   margin-top: 10px;
   font-weight: bold;
+  color: var(--tertiary-color);
 }
 
 .filters input,
@@ -83,4 +97,83 @@ th {
 
 #page-limit {
   display: none; /* Initially hide the select */
+}
+
+/* .btn.btn-primary{
+  background-color: ;
+} */
+
+/* CSS */
+.btn.btn-primary {
+  color: #fff;
+  padding: 15px 25px;
+  border-radius: 100px;
+  /* background-color: #4c43cd; */
+  background-color: var(--primary-color);
+  background-image: radial-gradient(
+      93% 87% at 87% 89%,
+      rgba(0, 0, 0, 0.23) 0%,
+      transparent 86.18%
+    ),
+    radial-gradient(
+      66% 87% at 26% 20%,
+      rgba(255, 255, 255, 0.41) 0%,
+      rgba(255, 255, 255, 0) 69.79%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  box-shadow: 2px 19px 31px rgba(0, 0, 0, 0.2);
+  font-weight: bold;
+  font-size: 18px;
+
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  cursor: pointer;
+  width: 150px;
+}
+
+.btn.btn-primary:hover {
+  background-color: var(--tertiary-color);
+}
+
+.limit-button {
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 120px;
+  /* background-color: #4c43cd; */
+  background-color: var(--primary-color);
+  background-image: radial-gradient(
+      93% 87% at 87% 89%,
+      rgba(0, 0, 0, 0.23) 0%,
+      transparent 86.18%
+    ),
+    radial-gradient(
+      66% 87% at 26% 20%,
+      rgba(255, 255, 255, 0.41) 0%,
+      rgba(255, 255, 255, 0) 69.79%,
+      rgba(255, 255, 255, 0) 100%
+    );
+  box-shadow: 2px 19px 31px rgba(0, 0, 0, 0.2);
+  font-size: 15px;
+  font-weight: bold;
+  border: 0;
+
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+
+  cursor: pointer;
+  width: 75px;
+}
+
+.limit-button:hover {
+  background-color: var(--tertiary-color);
+}
+
+.pagination ul {
+  background-color: var(--primary-color);
+  color: white;
 }

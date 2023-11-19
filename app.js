@@ -53,18 +53,18 @@ function generatePagination(totalPages, currentPage) {
   if (currentPage === 1) {
     paginationContainer.innerHTML += `<li class="page-item disabled"><a class="page-link" href="#" onclick="changePage(${
       currentPage - 1
-    }, ${totalPages})">Previous</a></li>`;
+    }, ${totalPages})" style="background-color: #610c9f; color: #fff;">Previous</a></li>`;
   } else {
     paginationContainer.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${
       currentPage - 1
-    }, ${totalPages})">Previous</a></li>`;
+    }, ${totalPages})" style="background-color: #610c9f; color: #fff;">Previous</a></li>`;
   }
 
   // Show the first three pages
   for (let page = 1; page <= Math.min(3, totalPages); page++) {
     paginationContainer.innerHTML += `<li class="page-item ${
       page === currentPage ? "active" : ""
-    }"><a class="page-link" href="#" onclick="changePage(${page}, ${totalPages})">${page}</a></li>`;
+    }"><a class="page-link" href="#" onclick="changePage(${page}, ${totalPages})" style="background-color: #610c9f; color: #fff;">${page}</a></li>`;
   }
 
   // Show ellipsis if there are more than three pages
@@ -74,7 +74,7 @@ function generatePagination(totalPages, currentPage) {
 
   // Show the current page
   if (currentPage > 3 && currentPage < Math.max(totalPages - 2, 2)) {
-    paginationContainer.innerHTML += `<li class="page-item active"><span class="page-link">${currentPage}</span></li>`;
+    paginationContainer.innerHTML += `<li class="page-item active"><span class="page-link" style="background-color: #610c9f; color: #fff;">${currentPage}</span></li>`;
     // Show ellipsis if there are more than three pages
     if (totalPages > 3) {
       paginationContainer.innerHTML += `<li class="page-item disabled"><span class="page-link">...</span></li>`;
@@ -85,18 +85,18 @@ function generatePagination(totalPages, currentPage) {
   for (let page = Math.max(totalPages - 2, 2); page <= totalPages; page++) {
     paginationContainer.innerHTML += `<li class="page-item ${
       page === currentPage ? "active" : ""
-    }"><a class="page-link" href="#" onclick="changePage(${page}, ${totalPages})">${page}</a></li>`;
+    }"><a class="page-link" href="#" onclick="changePage(${page}, ${totalPages})" style="background-color: #610c9f; color: #fff;">${page}</a></li>`;
   }
 
   // Add "Next" button
   if (currentPage === totalPages) {
     paginationContainer.innerHTML += `<li class="page-item disabled"><a class="page-link" href="#" onclick="changePage(${
       currentPage + 1
-    }, ${totalPages})">Next</a></li>`;
+    }, ${totalPages})" style="background-color: #610c9f; color: #fff;">Next</a></li>`;
   } else {
-    paginationContainer.innerHTML += `<li class="page-item"><a class="page-link" href="#" onclick="changePage(${
+    paginationContainer.innerHTML += `<li class="page-item" ><a class="page-link" href="#" onclick="changePage(${
       currentPage + 1
-    }, ${totalPages})">Next</a></li>`;
+    }, ${totalPages})" style="background-color: #610c9f; color: #fff;">Next</a></li>`;
   }
 }
 
