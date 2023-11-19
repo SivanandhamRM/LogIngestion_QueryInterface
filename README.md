@@ -42,14 +42,9 @@ The system architecture comprises a Flask application that serves as an interfac
 - URL: `/ingest`
 - Accepts JSON data to insert logs into the database.
 - Make sure the elements are in the following order: level, message, resource_id, timestamp, trace_id, span_id, commit, metadata
-- 1. **Level**: Represents the severity level of the log entry. It includes five possible values: debug, info, warning, error, and critical.
-- 2. **Message**: Contains the main content or description related to the log entry. It's a string data type.
-- 3. **Resource ID**: Identifies the resource associated with the log entry. It's a string data type.
-- 4. **Timestamp**: Captures the time when the log entry was generated. It's stored in datetime data type.
-- 5. **Trace ID**: Indicates the trace associated with the log entry. It's a string data type.
-- 6. **Span ID**: Represents the span ID associated with the log entry. It's a string data type.
-- 7. **Commit**: Refers to the commit related to the log entry. It's a string data type.
-- 8. **Metadata**: Contains additional information structured in JSON format. Since metadata is stored as JSON, it provides a semi-structured data storage approach, resembling a NoSQL structure.
+  1. level, message, resource_id, trace_id, span_id, commit - **string** datatype
+  2. timestamp - **DateTime** datatype
+  3. metadata - **json** datatype. Since metadata is stored as JSON, it provides a semi-structured data storage approach, resembling a NoSQL structure.
 
 2. **Log Querying Endpoint:**
 
@@ -61,6 +56,21 @@ The system architecture comprises a Flask application that serves as an interfac
 
 - HTML, CSS, and JavaScript interface for interacting with log data.
 - Allows users to filter logs based on different parameters.
+
+4. **Scalability and Database Optimization**
+
+### Efficient Handling of High Log Volumes
+
+This application is architected to effectively manage substantial volumes of logs, ensuring scalability to accommodate increasing data demands. Leveraging PostgreSQL's robust features, the system implements indexing and sharding methodologies to optimize performance, particularly under heavy workloads.
+
+### Indexing for Faster Data Retrieval
+
+To expedite data retrieval, strategic indexing is applied to specific fields within the PostgreSQL database. Notably, indexing is employed on fields such as `traceid`, `spanid`, and `commit`. These indexing strategies significantly enhance query performance when retrieving logs based on these indexed fields.
+
+#### Example of Indexing Syntax for the `level` Field in the `log` Table:
+
+```sql
+CREATE INDEX idx_level ON log (level);
 
 ---
 
@@ -76,3 +86,4 @@ The system architecture comprises a Flask application that serves as an interfac
 - `index.html`: HTML file for the user interface.
 - `app.js`: JavaScript code to handle user interactions.
 - `styles.css`: CSS file for styling the interface.
+```
